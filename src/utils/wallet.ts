@@ -17,10 +17,10 @@ export const setupNetwork = async () => {
         params: [
           {
             chainId: `0x${chainId.toString(16)}`,
-            chainName: 'Binance Smart Chain Mainnet',
+            chainName: 'Quark Chain Mainnet',
             nativeCurrency: {
-              name: 'BNB',
-              symbol: 'bnb',
+              name: 'QKC',
+              symbol: 'QKC',
               decimals: 18,
             },
             rpcUrls: nodes,

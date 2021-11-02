@@ -5,7 +5,7 @@ import { ConnectorNames } from '@pancakeswap/uikit'
 import { ethers } from 'ethers'
 import getNodeUrl from './getRpcUrl'
 
-const POLLING_INTERVAL = 12000
+const POLLING_INTERVAL = 15000
 const rpcUrl = getNodeUrl()
 const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 10)
 
