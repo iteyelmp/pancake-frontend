@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { pancakeBunniesAddress } from 'views/Nft/market/constants'
 import isEmpty from 'lodash/isEmpty'
 import {
   getNftsFromCollectionApi,
@@ -101,12 +100,6 @@ export const fetchNftsFromCollections = createAsyncThunk<
   { collectionAddress: string; page: number; size: number }
 >('nft/fetchNftsFromCollections', async ({ collectionAddress, page, size }) => {
   try {
-    if (collectionAddress === pancakeBunniesAddress) {
-      // PancakeBunnies don't need to pre-fetch "all nfts" from the collection
-      // When user visits IndividualNFTPage required nfts will be fetched via bunny id
-      return []
-    }
-
     const nfts = await getNftsFromCollectionApi(collectionAddress, size, page)
 
     if (!nfts?.data) {
@@ -178,64 +171,6 @@ export const filterNftsFromCollection = createAsyncThunk<
     return []
   }
 })
-
-/**
- * This action keeps data on the individual PancakeBunny page up-to-date. Operation is a twofold
- * 1. Update existing NFTs in the state in case some were sold or got price modified
- * 2. Fetch 30 more NFTs with specified bunny id
- */
-export const fetchNewPBAndUpdateExisting = createAsyncThunk<
-  NftToken[],
-  {
-    bunnyId: string
-    existingTokensWithBunnyId: string[]
-    allExistingPBTokenIds: string[]
-    existingMetadata: ApiSingleTokenData
-    orderDirection: 'asc' | 'desc'
-  }
->(
-  'nft/fetchNewPBAndUpdateExisting',
-  async ({ bunnyId, existingTokensWithBunnyId, allExistingPBTokenIds, existingMetadata, orderDirection }) => {
-    try {
-      // 1. Update existing NFTs in the state in case some were sold or got price modified
-      const [updatedNfts, updatedNftsMarket] = await Promise.all([
-        getNftsFromCollectionApi(pancakeBunniesAddress),
-        getMarketDataForTokenIds(pancakeBunniesAddress, allExistingPBTokenIds),
-      ])
-
-      if (!updatedNfts?.data) {
-        return []
-      }
-      const updatedTokens = updatedNftsMarket.map((marketData) => {
-        const apiMetadata = getMetadataWithFallback(updatedNfts.data, marketData.otherId)
-        const attributes = getPancakeBunniesAttributesField(marketData.otherId)
-        return combineApiAndSgResponseToNftToken(apiMetadata, marketData, attributes)
-      })
-
-      // 2. Fetch 30 more NFTs with specified bunny id
-      let newNfts = { data: { [bunnyId]: existingMetadata } }
-
-      if (!existingMetadata) {
-        newNfts = await getNftsFromCollectionApi(pancakeBunniesAddress)
-      }
-      const nftsMarket = await getNftsByBunnyIdSg(bunnyId, existingTokensWithBunnyId, orderDirection)
-
-      if (!newNfts?.data) {
-        return updatedTokens
-      }
-
-      const moreTokensWithRequestedBunnyId = nftsMarket.map((marketData) => {
-        const apiMetadata = getMetadataWithFallback(newNfts.data, marketData.otherId)
-        const attributes = getPancakeBunniesAttributesField(marketData.otherId)
-        return combineApiAndSgResponseToNftToken(apiMetadata, marketData, attributes)
-      })
-      return [...updatedTokens, ...moreTokensWithRequestedBunnyId]
-    } catch (error) {
-      console.error(`Failed to update PancakeBunnies NFTs`, error)
-      return []
-    }
-  },
-)
 
 export const fetchUserNfts = createAsyncThunk<
   NftToken[],
@@ -402,46 +337,6 @@ export const NftMarket = createSlice({
         activeFilters: {},
       }
       state.data.nfts[collectionAddress] = [...existingNftsWithoutNewOnes, ...action.payload]
-    })
-    builder.addCase(fetchNewPBAndUpdateExisting.pending, (state) => {
-      state.data.loadingState.isUpdatingPancakeBunnies = true
-    })
-    builder.addCase(fetchNewPBAndUpdateExisting.fulfilled, (state, action) => {
-      if (action.payload.length > 0) {
-        state.data.nfts[pancakeBunniesAddress] = action.payload
-      }
-      state.data.loadingState.isUpdatingPancakeBunnies = false
-      state.data.loadingState.latestPancakeBunniesUpdateAt = Date.now()
-    })
-    builder.addCase(fetchNewPBAndUpdateExisting.rejected, (state) => {
-      state.data.loadingState.isUpdatingPancakeBunnies = false
-      state.data.loadingState.latestPancakeBunniesUpdateAt = Date.now()
-    })
-    builder.addCase(fetchUserNfts.rejected, (state) => {
-      state.data.user.userNftsInitializationState = UserNftInitializationState.ERROR
-    })
-    builder.addCase(fetchUserNfts.pending, (state) => {
-      state.data.user.userNftsInitializationState = UserNftInitializationState.INITIALIZING
-    })
-    builder.addCase(fetchUserNfts.fulfilled, (state, action) => {
-      state.data.user.nfts = action.payload
-      state.data.user.userNftsInitializationState = UserNftInitializationState.INITIALIZED
-    })
-    builder.addCase(updateUserNft.fulfilled, (state, action) => {
-      const userNftsState: NftToken[] = state.data.user.nfts
-      const nftToUpdate = userNftsState.find((nft) => nft.tokenId === action.payload.tokenId)
-      const indexInState = userNftsState.indexOf(nftToUpdate)
-      state.data.user.nfts[indexInState] = action.payload
-    })
-    builder.addCase(removeUserNft.fulfilled, (state, action) => {
-      const copyOfState: NftToken[] = [...state.data.user.nfts]
-      const nftToRemove = copyOfState.find((nft) => nft.tokenId === action.payload)
-      const indexInState = copyOfState.indexOf(nftToRemove)
-      copyOfState.splice(indexInState, 1)
-      state.data.user.nfts = copyOfState
-    })
-    builder.addCase(addUserNft.fulfilled, (state, action) => {
-      state.data.user.nfts = [...state.data.user.nfts, action.payload]
     })
     builder.addCase(fetchUserActivity.fulfilled, (state, action) => {
       state.data.user.activity = { ...action.payload, initializationState: UserNftInitializationState.INITIALIZED }

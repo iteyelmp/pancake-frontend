@@ -4,7 +4,6 @@ import useFetchGlobalChartData from 'state/info/queries/protocol/chart'
 import fetchTopTransactions from 'state/info/queries/protocol/transactions'
 import useTopPoolAddresses from 'state/info/queries/pools/topPools'
 import usePoolDatas from 'state/info/queries/pools/poolData'
-import useFetchedTokenDatas from 'state/info/queries/tokens/tokenData'
 import useTopTokenAddresses from 'state/info/queries/tokens/topTokens'
 import {
   useProtocolData,
@@ -13,8 +12,6 @@ import {
   useUpdatePoolData,
   useAllPoolData,
   useAddPoolKeys,
-  useAllTokenData,
-  useUpdateTokenData,
   useAddTokenKeys,
 } from './hooks'
 
@@ -93,10 +90,8 @@ export const PoolUpdater: React.FC = () => {
 }
 
 export const TokenUpdater = (): null => {
-  const updateTokenDatas = useUpdateTokenData()
   const addTokenKeys = useAddTokenKeys()
 
-  const allTokenData = useAllTokenData()
   const addresses = useTopTokenAddresses()
 
   // add top tokens on first load
@@ -105,25 +100,6 @@ export const TokenUpdater = (): null => {
       addTokenKeys(addresses)
     }
   }, [addTokenKeys, addresses])
-
-  // detect for which addresses we havent loaded token data yet
-  const unfetchedTokenAddresses = useMemo(() => {
-    return Object.keys(allTokenData).reduce((accum: string[], key) => {
-      const tokenData = allTokenData[key]
-      if (!tokenData.data) {
-        accum.push(key)
-      }
-      return accum
-    }, [])
-  }, [allTokenData])
-
-  // fetch data for unfetched tokens and update them
-  const { error: tokenDataError, data: tokenDatas } = useFetchedTokenDatas(unfetchedTokenAddresses)
-  useEffect(() => {
-    if (tokenDatas && !tokenDataError) {
-      updateTokenDatas(Object.values(tokenDatas))
-    }
-  }, [tokenDataError, tokenDatas, updateTokenDatas])
 
   return null
 }

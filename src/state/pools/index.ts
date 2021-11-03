@@ -149,24 +149,6 @@ export const updateUserPendingReward =
     dispatch(updatePoolsUserData({ sousId, field: 'pendingReward', value: pendingRewards[sousId] }))
   }
 
-export const fetchCakeVaultPublicData = createAsyncThunk<CakeVault>('cakeVault/fetchPublicData', async () => {
-  const publicVaultInfo = await fetchPublicVaultData()
-  return publicVaultInfo
-})
-
-export const fetchCakeVaultFees = createAsyncThunk<VaultFees>('cakeVault/fetchFees', async () => {
-  const vaultFees = await fetchVaultFees()
-  return vaultFees
-})
-
-export const fetchCakeVaultUserData = createAsyncThunk<VaultUser, { account: string }>(
-  'cakeVault/fetchUser',
-  async ({ account }) => {
-    const userData = await fetchVaultUser(account)
-    return userData
-  },
-)
-
 export const PoolsSlice = createSlice({
   name: 'Pools',
   initialState,
@@ -196,21 +178,7 @@ export const PoolsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Vault public data that updates frequently
-    builder.addCase(fetchCakeVaultPublicData.fulfilled, (state, action: PayloadAction<CakeVault>) => {
-      state.cakeVault = { ...state.cakeVault, ...action.payload }
-    })
-    // Vault fees
-    builder.addCase(fetchCakeVaultFees.fulfilled, (state, action: PayloadAction<VaultFees>) => {
-      const fees = action.payload
-      state.cakeVault = { ...state.cakeVault, fees }
-    })
-    // Vault user data
-    builder.addCase(fetchCakeVaultUserData.fulfilled, (state, action: PayloadAction<VaultUser>) => {
-      const userData = action.payload
-      userData.isLoading = false
-      state.cakeVault = { ...state.cakeVault, userData }
-    })
+    console.log()
   },
 })
 
