@@ -1,13 +1,14 @@
 import { TokenAmount, Pair, Currency } from '@pancakeswap/sdk'
 import { useMemo } from 'react'
-import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
-import { Interface } from '@ethersproject/abi'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-
-import { useMultipleContractSingleData } from '../state/multicall/hooks'
+import { Interface } from '@ethersproject/abi'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
 
-const PAIR_INTERFACE = new Interface(IUniswapV2PairABI)
+import { useSingleContractInterfaceMultipleData } from '../state/multicall/hooks'
+import FactoryABI from '../config/abi/Factory.json'
+import { FACTORY_ADDRESS } from '../config/constants'
+
+const FACTORY_INTERFACE = new Interface(FactoryABI)
 
 export enum PairState {
   LOADING,
@@ -28,15 +29,14 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
     [chainId, currencies],
   )
 
-  const pairAddresses = useMemo(
-    () =>
-      tokens.map(([tokenA, tokenB]) => {
-        return tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getAddress(tokenA, tokenB) : undefined
-      }),
-    [tokens],
+  const results = useSingleContractInterfaceMultipleData(
+      FACTORY_ADDRESS,
+      FACTORY_INTERFACE,
+      'getReserves',
+      tokens.map(([tokenA, tokenB]) =>
+          tokenA && tokenB && !tokenA.equals(tokenB) ? [tokenA.address, tokenB.address] : undefined
+      ),
   )
-
-  const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves')
 
   return useMemo(() => {
     return results.map((result, i) => {

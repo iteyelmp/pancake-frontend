@@ -192,6 +192,38 @@ export function useSingleContractMultipleData(
   }, [fragment, contract, results, currentBlock])
 }
 
+export function useSingleContractInterfaceMultipleData(
+    contractAddress: (string),
+    contractInterface: Interface,
+    methodName: string,
+    callInputs: OptionalMethodInputs[],
+    options?: ListenerOptions,
+): CallState[] {
+    const fragment = useMemo(() => contractInterface.getFunction(methodName), [contractInterface, methodName])
+
+    const calls = useMemo(
+        () =>
+            contractInterface && contractAddress && fragment && callInputs && callInputs.length > 0
+                ? callInputs.map<Call | undefined>((inputs) => {
+                    return inputs
+                        ? {
+                            address: contractAddress,
+                            callData: contractInterface.encodeFunctionData(fragment, inputs),
+                        }
+                        : undefined
+                })
+                : [],
+        [contractInterface, contractAddress, callInputs, fragment],
+    )
+
+    const results = useCallsData(calls, options)
+
+    const { currentBlock } = useBlock()
+    return useMemo(() => {
+        return results.map((result) => toCallState(result, contractInterface, fragment, currentBlock))
+    }, [fragment, contractInterface, results, currentBlock])
+}
+
 export function useMultipleContractSingleData(
   addresses: (string | undefined)[],
   contractInterface: Interface,
