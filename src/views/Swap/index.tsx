@@ -490,6 +490,7 @@ export default function Swap({ history }: RouteComponentProps) {
           </Box>
         </Wrapper>
       </AppBody>
+
       {!swapIsUnsupported ? (
         <AdvancedSwapDetailsDropdown trade={trade} />
       ) : (

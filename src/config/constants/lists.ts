@@ -3,6 +3,7 @@ const PANCAKE_TOP100 = 'https://tokens.pancakeswap.finance/pancakeswap-top-100.j
 
 export const UNSUPPORTED_LIST_URLS: string[] = []
 
+// 推荐token
 // lower index == higher priority for token import
 export const DEFAULT_LIST_OF_LISTS: string[] = [
   PANCAKE_TOP100,
