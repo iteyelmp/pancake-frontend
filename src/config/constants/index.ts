@@ -1,7 +1,7 @@
 import { ChainId, JSBI, Percent, Token } from '@pancakeswap/sdk'
 import { mainnetTokens, testnetTokens } from './tokens'
 
-export const ROUTER_ADDRESS = '0x747eE171EB12947b964E1121016a02426100e286'
+export const ROUTER_ADDRESS = '0xD6028Edf784D0275A56D8840129C3b1a432fa352'
 export const FACTORY_ADDRESS = '0xa49b288b08090C16e97B299Aa5A8C0ce0Ab9930e'
 
 // a list of tokens by chain
@@ -9,6 +9,7 @@ type ChainTokenList = {
   readonly [chainId in ChainId]: Token[]
 }
 
+// TODO 默认参与交易路由的token
 // used to construct intermediary pairs for trading
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   [ChainId.MAINNET]: [
