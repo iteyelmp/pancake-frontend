@@ -1,5 +1,17 @@
 [
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_feeToSetter",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -31,72 +43,19 @@
     "type": "event"
   },
   {
-    "constant": false,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "tokenA",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "tokenB",
-        "type": "address"
-      }
-    ],
-    "name": "createPair",
+    "constant": true,
+    "inputs": [],
+    "name": "INIT_CODE_PAIR_HASH",
     "outputs": [
       {
-        "internalType": "address",
-        "name": "pair",
-        "type": "address"
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
       }
     ],
     "payable": false,
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_feeTo",
-        "type": "address"
-      }
-    ],
-    "name": "setFeeTo",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_feeToSetter",
-        "type": "address"
-      }
-    ],
-    "name": "setFeeToSetter",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_feeToSetter",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "constructor"
   },
   {
     "constant": true,
@@ -132,6 +91,32 @@
     ],
     "payable": false,
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "tokenA",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "tokenB",
+        "type": "address"
+      }
+    ],
+    "name": "createPair",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "pair",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -207,6 +192,11 @@
     "name": "getReserves",
     "outputs": [
       {
+        "internalType": "bool",
+        "name": "_pairCreated",
+        "type": "bool"
+      },
+      {
         "internalType": "uint112",
         "name": "_reserve0",
         "type": "uint112"
@@ -227,18 +217,33 @@
     "type": "function"
   },
   {
-    "constant": true,
-    "inputs": [],
-    "name": "INIT_CODE_PAIR_HASH",
-    "outputs": [
+    "constant": false,
+    "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
+        "internalType": "address",
+        "name": "_feeTo",
+        "type": "address"
       }
     ],
+    "name": "setFeeTo",
+    "outputs": [],
     "payable": false,
-    "stateMutability": "view",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_feeToSetter",
+        "type": "address"
+      }
+    ],
+    "name": "setFeeToSetter",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]
