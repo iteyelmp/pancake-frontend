@@ -13,12 +13,10 @@ import {
 } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import usePrevious from 'hooks/usePreviousValue'
-import { TokenList } from '@uniswap/token-lists'
 import { useTranslation } from 'contexts/Localization'
 import CurrencySearch from './CurrencySearch'
 import ImportToken from './ImportToken'
 import Manage from './Manage'
-import ImportList from './ImportList'
 import { CurrencyModalView } from './types'
 
 const Footer = styled.div`
@@ -72,10 +70,6 @@ export default function CurrencySearchModal({
   // used for import token flow
   const [importToken, setImportToken] = useState<Token | undefined>()
 
-  // used for import list
-  const [importList, setImportList] = useState<TokenList | undefined>()
-  const [listURL, setListUrl] = useState<string | undefined>()
-
   const { t } = useTranslation()
 
   const config = {
@@ -110,14 +104,10 @@ export default function CurrencySearchModal({
           />
         ) : modalView === CurrencyModalView.importToken && importToken ? (
           <ImportToken tokens={[importToken]} handleCurrencySelect={handleCurrencySelect} />
-        ) : modalView === CurrencyModalView.importList && importList && listURL ? (
-          <ImportList list={importList} listURL={listURL} onImport={() => setModalView(CurrencyModalView.manage)} />
         ) : modalView === CurrencyModalView.manage ? (
           <Manage
             setModalView={setModalView}
             setImportToken={setImportToken}
-            setImportList={setImportList}
-            setListUrl={setListUrl}
           />
         ) : (
           ''

@@ -2638,7 +2638,7 @@
 
 "@pancakeswap/sdk@git+https://github.com/iteyelmp/pancake-swap-sdk.git":
   version "2.4.0"
-  resolved "git+https://github.com/iteyelmp/pancake-swap-sdk.git#889d7478752e07ecb9c648ccde957ad57b56942d"
+  resolved "git+https://github.com/iteyelmp/pancake-swap-sdk.git#34603ce8f1e66021e4a2f89be7f7a09a83a4e329"
   dependencies:
     "@pancakeswap-libs/pancake-swap-core" "^0.1.0"
     big.js "^5.2.2"
