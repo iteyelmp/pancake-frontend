@@ -4,16 +4,12 @@ import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
 import {
   CampaignType,
-  SerializedFarmConfig,
   LotteryStatus,
   LotteryTicket,
   DeserializedPoolConfig,
   SerializedPoolConfig,
-  Team,
   TranslatableText,
-  DeserializedFarmConfig,
 } from 'config/constants/types'
-import { NftToken, State as NftMarketState } from './nftMarket/types'
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, State, unknown, AnyAction>
 
@@ -23,42 +19,6 @@ export interface BigNumberToJson {
 }
 
 export type SerializedBigNumber = string
-
-interface SerializedFarmUserData {
-  allowance: string
-  tokenBalance: string
-  stakedBalance: string
-  earnings: string
-}
-
-export interface DeserializedFarmUserData {
-  allowance: BigNumber
-  tokenBalance: BigNumber
-  stakedBalance: BigNumber
-  earnings: BigNumber
-}
-
-export interface SerializedFarm extends SerializedFarmConfig {
-  tokenPriceBusd?: string
-  quoteTokenPriceBusd?: string
-  tokenAmountTotal?: SerializedBigNumber
-  lpTotalInQuoteToken?: SerializedBigNumber
-  lpTotalSupply?: SerializedBigNumber
-  tokenPriceVsQuote?: SerializedBigNumber
-  poolWeight?: SerializedBigNumber
-  userData?: SerializedFarmUserData
-}
-
-export interface DeserializedFarm extends DeserializedFarmConfig {
-  tokenPriceBusd?: string
-  quoteTokenPriceBusd?: string
-  tokenAmountTotal?: BigNumber
-  lpTotalInQuoteToken?: BigNumber
-  lpTotalSupply?: BigNumber
-  tokenPriceVsQuote?: BigNumber
-  poolWeight?: BigNumber
-  userData?: DeserializedFarmUserData
-}
 
 interface CorePoolProps {
   startBlock?: number
@@ -91,33 +51,7 @@ export interface SerializedPool extends SerializedPoolConfig, CorePoolProps {
   }
 }
 
-export interface Profile {
-  userId: number
-  points: number
-  teamId: number
-  collectionAddress: string
-  tokenId: number
-  isActive: boolean
-  username: string
-  nft?: NftToken
-  team: Team
-  hasRegistered: boolean
-}
-
 // Slices states
-
-export interface SerializedFarmsState {
-  data: SerializedFarm[]
-  loadArchivedFarmsData: boolean
-  userDataLoaded: boolean
-}
-
-export interface DeserializedFarmsState {
-  data: DeserializedFarm[]
-  loadArchivedFarmsData: boolean
-  userDataLoaded: boolean
-}
-
 export interface VaultFees {
   performanceFee: number
   callFee: number
@@ -146,46 +80,6 @@ export interface PoolsState {
   data: SerializedPool[]
   cakeVault: CakeVault
   userDataLoaded: boolean
-}
-
-export enum ProfileAvatarFetchStatus {
-  NOT_FETCHED = 'not-fetched',
-  FETCHING = 'fetching',
-  FETCHED = 'fetched',
-}
-
-export interface ProfileState {
-  isInitialized: boolean
-  isLoading: boolean
-  hasRegistered: boolean
-  data: Profile
-  profileAvatars: {
-    [key: string]: {
-      username: string
-      nft: NftToken
-      hasRegistered: boolean
-      usernameFetchStatus: ProfileAvatarFetchStatus
-      avatarFetchStatus: ProfileAvatarFetchStatus
-    }
-  }
-}
-
-export type TeamResponse = {
-  0: string
-  1: string
-  2: string
-  3: string
-  4: boolean
-}
-
-export type TeamsById = {
-  [key: string]: Team
-}
-
-export interface TeamsState {
-  isInitialized: boolean
-  isLoading: boolean
-  data: TeamsById
 }
 
 export interface Achievement {
@@ -574,12 +468,8 @@ export type UserTicketsResponse = [ethers.BigNumber[], number[], boolean[]]
 export interface State {
   achievements: AchievementState
   block: BlockState
-  farms: SerializedFarmsState
   pools: PoolsState
   predictions: PredictionsState
-  profile: ProfileState
-  teams: TeamsState
   voting: VotingState
   lottery: LotteryState
-  nftMarket: NftMarketState
 }

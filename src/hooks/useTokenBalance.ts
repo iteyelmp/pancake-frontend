@@ -3,7 +3,7 @@ import { ethers } from 'ethers'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import tokens from 'config/constants/tokens'
-import { getBep20Contract, getCakeContract } from 'utils/contractHelpers'
+import { getBep20Contract } from 'utils/contractHelpers'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { simpleRpcProvider } from 'utils/providers'
 import useRefresh from './useRefresh'
@@ -50,23 +50,6 @@ const useTokenBalance = (tokenAddress: string) => {
   }, [account, tokenAddress, fastRefresh, SUCCESS, FAILED])
 
   return balanceState
-}
-
-export const useTotalSupply = () => {
-  const { slowRefresh } = useRefresh()
-  const [totalSupply, setTotalSupply] = useState<BigNumber>()
-
-  useEffect(() => {
-    async function fetchTotalSupply() {
-      const cakeContract = getCakeContract()
-      const supply = await cakeContract.totalSupply()
-      setTotalSupply(new BigNumber(supply.toString()))
-    }
-
-    fetchTotalSupply()
-  }, [slowRefresh])
-
-  return totalSupply
 }
 
 export const useBurnedBalance = (tokenAddress: string) => {
