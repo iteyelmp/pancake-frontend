@@ -16,7 +16,6 @@ const Menu = (props) => {
       globalMenu={<GlobalSettings />}
       isDark={isDark}
       links={config(t)}
-      buyCakeLabel={t('Buy CAKE')}
       {...props}
     />
   )
