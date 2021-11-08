@@ -4,15 +4,12 @@ import styled from "styled-components";
 import BottomNav from "../../components/BottomNav";
 import { Box } from "../../components/Box";
 import Flex from "../../components/Box/Flex";
-import Footer from "../../components/Footer";
 import MenuItems from "../../components/MenuItems/MenuItems";
 import { SubMenuItems } from "../../components/SubMenuItems";
 import { useMatchBreakpoints } from "../../hooks";
-import CakePrice from "../../components/CakePrice/CakePrice";
 import Logo from "./components/Logo";
-import { MENU_HEIGHT, MOBILE_MENU_HEIGHT } from "./config";
+import { MENU_HEIGHT } from "./config";
 import { NavProps } from "./types";
-import LangSelector from "../../components/LangSelector/LangSelector";
 
 const Wrapper = styled.div`
   position: relative;
@@ -54,17 +51,10 @@ const Menu: React.FC<NavProps> = ({
   userMenu,
   globalMenu,
   isDark,
-  toggleTheme,
-  currentLang,
-  setLang,
-  cakePriceUsd,
   links,
   subLinks,
-  footerLinks,
   activeItem,
   activeSubItem,
-  langs,
-  buyCakeLabel,
   children,
 }) => {
   const { isMobile } = useMatchBreakpoints();
@@ -111,39 +101,14 @@ const Menu: React.FC<NavProps> = ({
           {!isMobile && <MenuItems items={links} activeItem={activeItem} activeSubItem={activeSubItem} ml="24px" />}
         </Flex>
         <Flex alignItems="center">
-          {!isMobile && (
-            <Box mr="12px">
-              <CakePrice cakePriceUsd={cakePriceUsd} />
-            </Box>
-          )}
-          <Box mt="4px">
-            <LangSelector
-              currentLang={currentLang}
-              langs={langs}
-              setLang={setLang}
-              buttonScale="xs"
-              color="textSubtle"
-              hideLanguage
-            />
-          </Box>
-          {globalMenu} {userMenu}
+          {globalMenu}
+          {userMenu}
         </Flex>
       </StyledNav>
       {subLinks && <SubMenuItems items={subLinks} mt={`${MENU_HEIGHT + 1}px`} activeItem={activeSubItem} />}
       <BodyWrapper mt={!subLinks ? `${MENU_HEIGHT + 1}px` : "0"}>
         <Inner isPushed={false} showMenu={showMenu}>
           {children}
-          <Footer
-            items={footerLinks}
-            isDark={isDark}
-            toggleTheme={toggleTheme}
-            langs={langs}
-            setLang={setLang}
-            currentLang={currentLang}
-            cakePriceUsd={cakePriceUsd}
-            buyCakeLabel={buyCakeLabel}
-            mb={[`${MOBILE_MENU_HEIGHT}px`, null, "0px"]}
-          />
         </Inner>
       </BodyWrapper>
       {isMobile && <BottomNav items={links} activeItem={activeItem} activeSubItem={activeSubItem} />}
