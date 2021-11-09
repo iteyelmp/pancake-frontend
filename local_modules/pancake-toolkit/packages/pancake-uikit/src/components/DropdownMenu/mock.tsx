@@ -8,7 +8,7 @@ const ItemsMock: DropdownMenuItems[] = [
   },
   {
     label: "Liquidity",
-    href: "/pool",
+    href: "/liquidity",
   },
   {
     label: "LP Migration",
