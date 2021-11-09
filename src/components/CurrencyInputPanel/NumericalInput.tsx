@@ -34,7 +34,7 @@ const StyledInput = styled.input<{ error?: boolean; fontSize?: string; align?: s
   }
 
   ::placeholder {
-    color: ${({ theme }) => theme.colors.textSubtle};
+    color: #666666;
   }
 `
 
@@ -80,6 +80,7 @@ export const Input = React.memo(function InnerInput({
       minLength={1}
       maxLength={79}
       spellCheck="false"
+      style={{ color: '#333333' }}
     />
   )
 })

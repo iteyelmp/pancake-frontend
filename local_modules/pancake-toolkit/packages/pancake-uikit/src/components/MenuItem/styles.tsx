@@ -54,7 +54,7 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
   `}
 
   &:hover {
-    background: ${({ theme }) => theme.colors.tertiary};
+    color: rgba(53,74,147,0.5);
     ${({ $variant }) => $variant === "default" && "border-radius: 16px;"};
   }
 `;

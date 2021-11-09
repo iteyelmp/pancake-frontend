@@ -18,16 +18,11 @@ export interface LinkStatus {
 export interface NavProps {
   userMenu?: ReactElement;
   globalMenu?: ReactElement;
+  shareMenu?: ReactElement;
   links: Array<MenuItemsType>;
   subLinks: Array<SubMenuItemsType>;
   footerLinks: Array<FooterLinkType>;
   activeItem: string;
   activeSubItem: string;
   isDark: boolean;
-  toggleTheme: (isDark: boolean) => void;
-  cakePriceUsd?: number;
-  currentLang: string;
-  buyCakeLabel: string;
-  langs: Language[];
-  setLang: (lang: Language) => void;
 }

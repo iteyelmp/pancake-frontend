@@ -45,7 +45,7 @@ import SwapWarningModal from './components/SwapWarningModal'
 const Label = styled(Text)`
   font-size: 12px;
   font-weight: bold;
-  color: ${({ theme }) => theme.colors.secondary};
+  color: #354A93;
 `
 
 export default function Swap({ history }: RouteComponentProps) {
@@ -326,7 +326,7 @@ export default function Swap({ history }: RouteComponentProps) {
                       setApprovalSubmitted(false) // reset 2 step UI for approvals
                       onSwitchTokens()
                     }}
-                    color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? 'primary' : 'text'}
+                    color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? 'primary' : 'textDisabled'}
                   />
                 </ArrowWrapper>
                 {recipient === null && !showWrap && isExpertMode ? (

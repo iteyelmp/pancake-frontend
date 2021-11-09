@@ -2,17 +2,17 @@ import { Colors } from "./types";
 
 export const baseColors = {
   failure: "#ED4B9E",
-  primary: "#1FC7D4",
-  primaryBright: "#53DEE9",
-  primaryDark: "#0098A1",
-  secondary: "#7645D9",
-  success: "#31D0AA",
+  primary: "#354A93",
+  primaryBright: "#4966cd",
+  primaryDark: "#1f2b58",
+  secondary: "#354A93",
+  success: "#354A93",
   warning: "#FFB237",
 };
 
 export const additionalColors = {
   binance: "#F0B90B",
-  overlay: "#452a7a",
+  overlay: "rgba(0,0,0,0.5)",
   gold: "#FFC700",
   silver: "#B2B2B2",
   bronze: "#E7974D",
@@ -33,9 +33,9 @@ export const lightColors: Colors = {
   input: "#eeeaf4",
   inputSecondary: "#d7caec",
   tertiary: "#EFF4F5",
-  text: "#280D5F",
-  textDisabled: "#BDC2C4",
-  textSubtle: "#7A6EAA",
+  text: "#333333",
+  textDisabled: "#666666",
+  textSubtle: "#333333",
   disabled: "#E9EAEB",
   gradients: {
     bubblegum: "linear-gradient(139.73deg, #E5FDFF 0%, #F3EFFF 100%)",

@@ -50,6 +50,7 @@ const Inner = styled.div<{ isPushed: boolean; showMenu: boolean }>`
 const Menu: React.FC<NavProps> = ({
   userMenu,
   globalMenu,
+  shareMenu,
   isDark,
   links,
   subLinks,
@@ -101,8 +102,9 @@ const Menu: React.FC<NavProps> = ({
           {!isMobile && <MenuItems items={links} activeItem={activeItem} activeSubItem={activeSubItem} ml="24px" />}
         </Flex>
         <Flex alignItems="center">
-          {globalMenu}
+          {shareMenu}
           {userMenu}
+          {globalMenu}
         </Flex>
       </StyledNav>
       {subLinks && <SubMenuItems items={subLinks} mt={`${MENU_HEIGHT + 1}px`} activeItem={activeSubItem} />}
