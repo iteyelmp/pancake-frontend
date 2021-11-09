@@ -10,13 +10,13 @@ import { UserMenuItem } from "./styles";
 
 export const StyledUserMenu = styled(Flex)`
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.tertiary};
+  background-color: #DDDDDD;
   border-radius: 16px;
   box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   display: inline-flex;
   height: 32px;
-  padding-left: 40px;
+  padding-left: 30px;
   padding-right: 8px;
   position: relative;
 

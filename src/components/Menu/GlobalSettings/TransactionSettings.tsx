@@ -175,7 +175,7 @@ const SlippageTabs = () => {
               scale="sm"
               inputMode="numeric"
               pattern="^[0-9]+$"
-              color={deadlineError ? 'red' : undefined}
+              color="#00ff00"
               onBlur={() => {
                 parseCustomDeadline((ttl / 60).toString())
               }}
