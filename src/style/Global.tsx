@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
      background-color: white;
-     background-image:url(./images/bg.png);
+     background-image:url(/images/bg.png);
      background-repeat: no-repeat;
      background-attachment:fixed;
      background-size: 100%;
