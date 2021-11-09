@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import Flex from "../../../components/Box/Flex";
 import { LogoIcon, LogoWithTextIcon } from "../../../components/Svg";
 
@@ -9,37 +9,20 @@ interface Props {
   href: string;
 }
 
-const blink = keyframes`
-  0%,  100% { transform: scaleY(1); } 
-  50% { transform:  scaleY(0.1); } 
-`;
-
 const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
   .mobile-icon {
-    width: 32px;
-    ${({ theme }) => theme.mediaQueries.nav} {
-      display: none;
-    }
+    width: 68px;
+    height: 48px;
   }
   .desktop-icon {
-    width: 160px;
+    width: 120px;
+    height: 48px;
+    padding-right: 25px;
     display: none;
     ${({ theme }) => theme.mediaQueries.nav} {
       display: block;
-    }
-  }
-  .right-eye {
-    animation-delay: 20ms;
-  }
-  &:hover {
-    .left-eye,
-    .right-eye {
-      transform-origin: center 60%;
-      animation-name: ${blink};
-      animation-duration: 350ms;
-      animation-iteration-count: 1;
     }
   }
 `;
