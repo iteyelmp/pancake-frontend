@@ -7,8 +7,8 @@ const ConnectWalletButton = (props) => {
 
   const connectWallet = () => {
       login(ConnectorNames.Injected);
-      localStorage.setItem(walletLocalStorageKey, "Metamask");
-      localStorage.setItem(connectorLocalStorageKey, ConnectorNames.Injected);
+      window.localStorage.setItem(walletLocalStorageKey, "Metamask");
+      window.localStorage.setItem(connectorLocalStorageKey, ConnectorNames.Injected);
   }
   return (
     <Button onClick={ connectWallet } {...props}>
