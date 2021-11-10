@@ -97,7 +97,7 @@ const SlippageTabs = () => {
               setSlippageInput('')
               setUserSlippageTolerance(10)
             }}
-            variant={userSlippageTolerance === 10 ? 'primary' : 'tertiary'}
+            variant={userSlippageTolerance === 10 ? 'primary' : 'input'}
           >
             0.1%
           </Button>
@@ -109,7 +109,7 @@ const SlippageTabs = () => {
               setSlippageInput('')
               setUserSlippageTolerance(50)
             }}
-            variant={userSlippageTolerance === 50 ? 'primary' : 'tertiary'}
+            variant={userSlippageTolerance === 50 ? 'primary' : 'input'}
           >
             0.5%
           </Button>
@@ -121,7 +121,7 @@ const SlippageTabs = () => {
               setSlippageInput('')
               setUserSlippageTolerance(100)
             }}
-            variant={userSlippageTolerance === 100 ? 'primary' : 'tertiary'}
+            variant={userSlippageTolerance === 100 ? 'primary' : 'input'}
           >
             1.0%
           </Button>
@@ -175,7 +175,7 @@ const SlippageTabs = () => {
               scale="sm"
               inputMode="numeric"
               pattern="^[0-9]+$"
-              color="#00ff00"
+              color={deadlineError ? 'red' : undefined}
               onBlur={() => {
                 parseCustomDeadline((ttl / 60).toString())
               }}
